@@ -29,7 +29,7 @@ describe('basic sort', function () {
 });
 
 describe('arraySort', function () {
-  var collection = [
+  var posts = [
     { path: 'a.md', locals: { date: '2014-01-09' } },
     { path: 'f.md', locals: { date: '2014-01-02' } },
     { path: 'd.md', locals: { date: '2013-05-06' } },
@@ -48,7 +48,7 @@ describe('arraySort', function () {
       {key: 'z'}
     ]);
 
-    arraySort(collection, 'path').should.eql([
+    arraySort(posts, 'path').should.eql([
       { path: 'a.md', locals: { date: '2014-01-09' } },
       { path: 'b.md', locals: { date: '2012-01-02' } },
       { path: 'c.md', locals: { date: '2015-04-12' } },
@@ -61,7 +61,7 @@ describe('arraySort', function () {
   });
 
   it('should sort by a nested property:', function () {
-    var res = arraySort(collection, 'locals.date');
+    var res = arraySort(posts, 'locals.date');
     res.should.eql([
       { path: 'b.md', locals: { date: '2012-01-02' } },
       { path: 'd.md', locals: { date: '2013-05-06' } },
@@ -91,28 +91,28 @@ describe('arraySort', function () {
   });
 
   it('should sort by multiple properties:', function () {
-    var collection = [
-      { key: 'bbb', locals: { date: '2013-05-06' } },
-      { key: 'aaa', locals: { date: '2012-01-02' } },
-      { key: 'ddd', locals: { date: '2015-04-12' } },
-      { key: 'ccc', locals: { date: '2014-01-02' } },
-      { key: 'ccc', locals: { date: '2015-01-02' } },
-      { key: 'ddd', locals: { date: '2014-01-09' } },
-      { key: 'bbb', locals: { date: '2014-06-01' } },
-      { key: 'aaa', locals: { date: '2014-02-02' } },
+    var posts = [
+      { foo: 'bbb', locals: { date: '2013-05-06' } },
+      { foo: 'aaa', locals: { date: '2012-01-02' } },
+      { foo: 'ddd', locals: { date: '2015-04-12' } },
+      { foo: 'ccc', locals: { date: '2014-01-02' } },
+      { foo: 'ccc', locals: { date: '2015-01-02' } },
+      { foo: 'ddd', locals: { date: '2014-01-09' } },
+      { foo: 'bbb', locals: { date: '2014-06-01' } },
+      { foo: 'aaa', locals: { date: '2014-02-02' } },
     ];
 
-    var actual = arraySort(collection, ['key', 'locals.date']);
+    var actual = arraySort(posts, ['foo', 'locals.date']);
 
     actual.should.eql([
-      { key: 'aaa', locals: { date: '2012-01-02' } },
-      { key: 'aaa', locals: { date: '2014-02-02' } },
-      { key: 'bbb', locals: { date: '2013-05-06' } },
-      { key: 'bbb', locals: { date: '2014-06-01' } },
-      { key: 'ccc', locals: { date: '2014-01-02' } },
-      { key: 'ccc', locals: { date: '2015-01-02' } },
-      { key: 'ddd', locals: { date: '2014-01-09' } },
-      { key: 'ddd', locals: { date: '2015-04-12' } }
+      { foo: 'aaa', locals: { date: '2012-01-02' } },
+      { foo: 'aaa', locals: { date: '2014-02-02' } },
+      { foo: 'bbb', locals: { date: '2013-05-06' } },
+      { foo: 'bbb', locals: { date: '2014-06-01' } },
+      { foo: 'ccc', locals: { date: '2014-01-02' } },
+      { foo: 'ccc', locals: { date: '2015-01-02' } },
+      { foo: 'ddd', locals: { date: '2014-01-09' } },
+      { foo: 'ddd', locals: { date: '2015-04-12' } }
     ]);
   });
 
