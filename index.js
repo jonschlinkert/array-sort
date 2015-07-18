@@ -78,24 +78,12 @@ function sortBy(props, opts) {
  */
 
 function compare(prop, a, b) {
-  // custom function
   if (typeof prop === 'function') {
     // expose `compare` to custom function
     return prop(a, b, compare.bind(null, null));
   }
-
-  // compare strings
-  if (typeof a === 'string' && typeof b === 'string') {
-    return a.localeCompare(b);
-  }
-
-  // compare numbers
-  if (typeOf(a) === 'number' && typeOf(b) === 'number') {
-    return a - b;
-  }
-
   // compare object values
-  if (prop && typeOf(a) === 'object' && typeOf(b) === 'object') {
+  if (prop && typeof a === 'object' && typeof b === 'object') {
     return compare(null, get(a, prop), get(b, prop));
   }
   return defaultCompare(a, b);
