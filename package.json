@@ -1,7 +1,7 @@
 {
   "name": "array-sort",
   "description": "Fast and powerful array sorting. Sort an array of objects by one or more properties. Any number of nested properties or custom comparison functions may be used.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/jonschlinkert/array-sort",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/array-sort",
@@ -24,6 +24,10 @@
     "kind-of": "^2.0.0"
   },
   "devDependencies": {
+    "ansi-bold": "^0.1.1",
+    "benchmarked": "^0.1.4",
+    "glob": "^5.0.14",
+    "lodash.sortbyorder": "^3.4.4",
     "mocha": "*",
     "should": "*"
   },
