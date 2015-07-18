@@ -1,0 +1,68 @@
+{
+  "name": "array-sort",
+  "description": "Fast and simple array sorting. Sort an array of primitives, or an array of objects by any number of properties or nested properties.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/array-sort",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "jonschlinkert/array-sort",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/array-sort/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "get-value": "^1.1.5",
+    "kind-of": "^2.0.0"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "keywords": [
+    "arr",
+    "array",
+    "asc",
+    "ascend",
+    "ascending",
+    "desc",
+    "descend",
+    "descending",
+    "dot",
+    "element",
+    "elements",
+    "get",
+    "multiple",
+    "nested",
+    "obj",
+    "object",
+    "order",
+    "ordered",
+    "path",
+    "prop",
+    "properties",
+    "property",
+    "sort",
+    "sorted",
+    "sorting"
+  ],
+  "verb": {
+    "related": {
+      "list": [
+        "sort-asc",
+        "sort-desc",
+        "get-value",
+        "set-value",
+        "sort-object"
+      ]
+    }
+  }
+}
