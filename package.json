@@ -1,6 +1,6 @@
 {
   "name": "array-sort",
-  "description": "Fast and simple array sorting. Sort an array of primitives, or an array of objects by any number of properties or nested properties.",
+  "description": "Fast and powerful array sorting. Sort an array of objects by one or more properties. Any number of nested properties or custom comparison functions may be used.",
   "version": "0.1.0",
   "homepage": "https://github.com/jonschlinkert/array-sort",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",

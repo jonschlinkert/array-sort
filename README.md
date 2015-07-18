@@ -1,6 +1,6 @@
 # array-sort [![NPM version](https://badge.fury.io/js/array-sort.svg)](http://badge.fury.io/js/array-sort)
 
-> Fast and simple array sorting. Sort an array of primitives, or an array of objects by any number of properties or nested properties.
+> Fast and powerful array sorting. Sort an array of objects by one or more properties. Any number of nested properties or custom comparison functions may be used.
 
 ## Install
 
