@@ -34,9 +34,6 @@ arraySort([{foo: 'y'}, {foo: 'z'}, {foo: 'x'}], 'foo', {reverse: true});
 
 * [Params](#params)
 * [Examples](#examples)
-  - [Object paths](#object-paths)
-  - [Sort by multiple properties and functions](#sort-by-multiple-properties-and-functions)
-  - [Custom functions](#custom-functions)
 * [Related projects](#related-projects)
 * [Running tests](#running-tests)
 * [Contributing](#contributing)
@@ -54,121 +51,109 @@ arraySort(array, comparisonArgs);
 ```
 
 * `array`: **{Array}** The array to sort
-* `comparisonArgs`: **{Function|String|Array}**: Any number of functions, object paths, or arrays or objects paths and functions may be passed.
+* `comparisonArgs`: **{Function|String|Array}**: One or more functions or object paths to use for sorting.
 
 ## Examples
 
-### Object paths
-
-Say you have the following blog posts:
+**[Sort blog posts](examples/blog-posts.js)**
 
 ```js
-var collection = [
-  { path: 'a.md', locals: { date: '2014-01-09' } },
-  { path: 'f.md', locals: { date: '2014-01-02' } },
-  { path: 'd.md', locals: { date: '2013-05-06' } },
-  { path: 'e.md', locals: { date: '2015-01-02' } },
-  { path: 'b.md', locals: { date: '2012-01-02' } },
-  { path: 'f.md', locals: { date: '2014-06-01' } },
-  { path: 'c.md', locals: { date: '2015-04-12' } },
-  { path: 'g.md', locals: { date: '2014-02-02' } },
-];
-```
+var arraySort = require('array-sort');
 
-and you want to sort them by `locals.date`:
-
-```js
-arraySort(collection, 'locals.date');
-```
-
-**Result**
-
-```js
-[
-  { path: 'b.md', locals: { date: '2012-01-02' } },
-  { path: 'd.md', locals: { date: '2013-05-06' } },
-  { path: 'f.md', locals: { date: '2014-01-02' } },
-  { path: 'a.md', locals: { date: '2014-01-09' } },
-  { path: 'g.md', locals: { date: '2014-02-02' } },
-  { path: 'f.md', locals: { date: '2014-06-01' } },
-  { path: 'e.md', locals: { date: '2015-01-02' } },
-  { path: 'c.md', locals: { date: '2015-04-12' } }
-];
-```
-
-### Sort by multiple properties and functions
-
-Here are the "posts" we want to sort:
-
-```js
 var posts = [
-  { path: 'a.md', locals: { date: '2014-01-01', foo: 'zzz', bar: 1 } },
-  { path: 'f.md', locals: { date: '2014-01-01', foo: 'mmm', bar: 2 } },
-  { path: 'd.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 3 } },
-  { path: 'i.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 5 } },
-  { path: 'k.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 1 } },
-  { path: 'j.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 4 } },
-  { path: 'h.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 6 } },
-  { path: 'l.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 7 } },
-  { path: 'e.md', locals: { date: '2015-01-02', foo: 'aaa', bar: 8 } },
-  { path: 'b.md', locals: { date: '2012-01-02', foo: 'ccc', bar: 9 } },
-  { path: 'f.md', locals: { date: '2014-06-01', foo: 'rrr', bar: 10 } },
-  { path: 'c.md', locals: { date: '2015-04-12', foo: 'ttt', bar: 11 } },
-  { path: 'g.md', locals: { date: '2014-02-02', foo: 'yyy', bar: 12 } },
+  { path: 'c.md', locals: { date: '2014-01-09' } },
+  { path: 'a.md', locals: { date: '2014-01-02' } },
+  { path: 'b.md', locals: { date: '2013-05-06' } },
 ];
+
+// sort by `locals.date`
+console.log(arraySort(posts, 'locals.date'));
+
+// sort by `path`
+console.log(arraySort(posts, 'path'));
 ```
 
-**The goal**
-
-Sort "posts" by the following:
-
-* `locals.date`: our first choice
-* `locals.foo`: Use this when mulitiple posts have the same `locals.date` value
-* `locals.bar`: Use this when mulitiple posts have the same `locals.foo` value
+**[Sort by multiple properties](examples/multiple-props.js)**
 
 ```js
-// let's create a reusable comparison function
-var compare = function(prop) { 
-  // the last arg, `fn` is the internal comparison function
-  // used by the lib. it's exposed here for convenience
-  return function (a, b, fn) {
-    var valA = get(a, prop);
-    var valB = get(b, prop);
-    return fn(valA, valB);
+var arraySort = require('array-sort');
+
+var posts = [
+  { locals: { foo: 'bbb', date: '2013-05-06' }},
+  { locals: { foo: 'aaa', date: '2012-01-02' }},
+  { locals: { foo: 'ccc', date: '2014-01-02' }},
+  { locals: { foo: 'ccc', date: '2015-01-02' }},
+  { locals: { foo: 'bbb', date: '2014-06-01' }},
+  { locals: { foo: 'aaa', date: '2014-02-02' }},
+];
+
+// sort by `locals.foo`, then `locals.date`
+var result = arraySort(posts, ['locals.foo', 'locals.date']);
+
+console.log(result);
+// [ { locals: { foo: 'aaa', date: '2012-01-02' } },
+//   { locals: { foo: 'aaa', date: '2014-02-02' } },
+//   { locals: { foo: 'bbb', date: '2013-05-06' } },
+//   { locals: { foo: 'bbb', date: '2014-06-01' } },
+//   { locals: { foo: 'ccc', date: '2014-01-02' } },
+//   { locals: { foo: 'ccc', date: '2015-01-02' } } ]
+```
+
+**[Custom function](examples/custom-function.js)**
+
+If custom functions are supplied, array elements are sorted according to the return value of the compare function. See the [docs for ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)`Array.sort()` for more details.
+
+```js
+var arr = [
+  {one: 'w', two: 'b'},
+  {one: 'z', two: 'a'},
+  {one: 'x', two: 'c'},
+  {one: 'y', two: 'd'},
+];
+
+function compare(prop) {
+  return function (a, b) {
+    return a[prop].localeCompare(b[prop]);
   };
-};
+}
+
+var result = arraySort(arr, function (a, b) {
+  return a.two.localeCompare(b.two);
+});
+
+console.log(result);
+// [ { one: 'z', two: 'a' },
+//   { one: 'w', two: 'b' },
+//   { one: 'x', two: 'c' },
+//   { one: 'y', two: 'd' } ]
 ```
 
-**Time to sort!**
+**[Multiple custom functions](examples/custom-functions.js)**
 
 ```js
-// the comparison args can be an array or a list, makes no difference
-arraySort(posts, ['locals.date', compare('locals.foo'), compare('locals.bar')]);
+var arr = [
+  {foo: 'w', bar: 'y', baz: 'w'},
+  {foo: 'x', bar: 'y', baz: 'w'},
+  {foo: 'x', bar: 'y', baz: 'z'},
+  {foo: 'x', bar: 'x', baz: 'w'},
+];
+
+// reusable compare function
+function compare(prop) {
+  return function (a, b) {
+    return a[prop].localeCompare(b[prop]);
+  };
+}
+
+// the `compare` functions can be a list or array
+var result = arraySort(arr, compare('foo'), compare('bar'), compare('baz'));
+
+console.log(result);
+// [ { foo: 'w', bar: 'y', baz: 'w' },
+//   { foo: 'x', bar: 'x', baz: 'w' },
+//   { foo: 'x', bar: 'y', baz: 'w' },
+//   { foo: 'x', bar: 'y', baz: 'z' } ]
 ```
-
-**Result**
-
-```js
-[
-  { path: 'b.md', locals: { date: '2012-01-02', foo: 'ccc', bar: 9 } },
-  { path: 'f.md', locals: { date: '2014-01-01', foo: 'mmm', bar: 2 } },
-  { path: 'k.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 1 } },
-  { path: 'd.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 3 } },
-  { path: 'j.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 4 } },
-  { path: 'i.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 5 } },
-  { path: 'h.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 6 } },
-  { path: 'l.md', locals: { date: '2014-01-01', foo: 'xxx', bar: 7 } },
-  { path: 'a.md', locals: { date: '2014-01-01', foo: 'zzz', bar: 1 } },
-  { path: 'g.md', locals: { date: '2014-02-02', foo: 'yyy', bar: 12 } },
-  { path: 'f.md', locals: { date: '2014-06-01', foo: 'rrr', bar: 10 } },
-  { path: 'e.md', locals: { date: '2015-01-02', foo: 'aaa', bar: 8 } },
-  { path: 'c.md', locals: { date: '2015-04-12', foo: 'ttt', bar: 11 } }
-]);
-```
-
-### Custom functions
-
-If custom functions are supplied, array elements are sorted according to the return value of the compare function. See the [docs for ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)`Array.sort()`.
 
 ## Related projects
 
