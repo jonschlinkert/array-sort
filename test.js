@@ -1,34 +1,34 @@
 'use strict';
 
-/* deps: mocha */
+require('mocha');
 var should = require('should');
 var get = require('get-value');
 var arraySort = require('./');
 
-describe('errors', function () {
-  it('should throw an error when invalid args are passed:', function () {
-    (function () {
+describe('errors', function() {
+  it('should throw an error when invalid args are passed:', function() {
+    (function() {
       arraySort({});
     }).should.throw('array-sort expects an array.');
   });
 });
 
-describe('empty array', function () {
-  it('should return an empty array when null or undefined is passed', function () {
+describe('empty array', function() {
+  it('should return an empty array when null or undefined is passed', function() {
     arraySort().should.eql([]);
     arraySort(undefined).should.eql([]);
     arraySort(null).should.eql([]);
   })
 });
 
-describe('basic sort', function () {
-  it('should sort an array of primitives', function () {
+describe('basic sort', function() {
+  it('should sort an array of primitives', function() {
     var arr = ['d', 3, 'b', 'a', 'd', 1, 0, 'z'];
     arraySort(arr).should.eql([ 0, 1, 3, 'a', 'b', 'd', 'd', 'z' ]);
   })
 });
 
-describe('arraySort', function () {
+describe('arraySort', function() {
   var posts = [
     { path: 'a.md', locals: { date: '2014-01-09' } },
     { path: 'f.md', locals: { date: '2014-01-02' } },
@@ -40,7 +40,7 @@ describe('arraySort', function () {
     { path: 'g.md', locals: { date: '2014-02-02' } },
   ];
 
-  it('should sort by a property:', function () {
+  it('should sort by a property:', function() {
     var arr = [{key: 'y'}, {key: 'z'}, {key: 'x'}];
     arraySort(arr, 'key').should.eql([
       {key: 'x'},
@@ -60,7 +60,7 @@ describe('arraySort', function () {
     ]);
   });
 
-  it('should sort by a nested property:', function () {
+  it('should sort by a nested property:', function() {
     var res = arraySort(posts, 'locals.date');
     res.should.eql([
       { path: 'b.md', locals: { date: '2012-01-02' } },
@@ -74,7 +74,7 @@ describe('arraySort', function () {
     ]);
   });
 
-  it('should do nothing when the specified property is not a string:', function () {
+  it('should do nothing when the specified property is not a string:', function() {
     var arr = [
       {a: {b: {c: 'c'}}},
       {a: {b: {z: 'z'}}},
@@ -90,7 +90,7 @@ describe('arraySort', function () {
     ]);
   });
 
-  it('should sort by multiple properties:', function () {
+  it('should sort by multiple properties:', function() {
     var posts = [
       { foo: 'bbb', locals: { date: '2013-05-06' } },
       { foo: 'aaa', locals: { date: '2012-01-02' } },
@@ -116,10 +116,10 @@ describe('arraySort', function () {
     ]);
   });
 
-  it('should sort with a function:', function () {
+  it('should sort with a function:', function() {
     var arr = [{key: 'y'}, {key: 'z'}, {key: 'x'}];
 
-    var actual = arraySort(arr, function (a, b) {
+    var actual = arraySort(arr, function(a, b) {
       return a.key > b.key;
     });
 
@@ -130,7 +130,7 @@ describe('arraySort', function () {
     ]);
   });
 
-  it('should support sorting with a list of function:', function () {
+  it('should support sorting with a list of function:', function() {
     var arr = [
       {foo: 'w', bar: 'y', baz: 'w', quux: 'a'},
       {foo: 'x', bar: 'y', baz: 'w', quux: 'b'},
@@ -139,7 +139,7 @@ describe('arraySort', function () {
     ];
 
     var compare = function(prop) {
-      return function (a, b) {
+      return function(a, b) {
         return a[prop].localeCompare(b[prop]);
       };
     };
@@ -158,7 +158,7 @@ describe('arraySort', function () {
     ]);
   });
 
-  it('should support sorting with an array of function:', function () {
+  it('should support sorting with an array of function:', function() {
     var arr = [
       {foo: 'w', bar: 'y', baz: 'w', quux: 'a'},
       {foo: 'x', bar: 'y', baz: 'w', quux: 'b'},
@@ -167,7 +167,7 @@ describe('arraySort', function () {
     ];
 
     var compare = function(prop) {
-      return function (a, b) {
+      return function(a, b) {
         return a[prop].localeCompare(b[prop]);
       };
     };
@@ -187,7 +187,7 @@ describe('arraySort', function () {
     ]);
   });
 
-  it('should support sorting with any combination of functions and properties:', function () {
+  it('should support sorting with any combination of functions and properties:', function() {
     var posts = [
       { path: 'a.md', locals: { date: '2014-01-01', foo: 'zzz', bar: 1 } },
       { path: 'f.md', locals: { date: '2014-01-01', foo: 'mmm', bar: 2 } },
@@ -205,7 +205,7 @@ describe('arraySort', function () {
     ];
 
     var compare = function(prop) {
-      return function (a, b, fn) {
+      return function(a, b, fn) {
         var valA = get(a, prop);
         var valB = get(b, prop);
         return fn(valA, valB);
@@ -233,7 +233,7 @@ describe('arraySort', function () {
     ]);
   });
 
-  it('should support reverse sorting with any combination of functions and properties:', function () {
+  it('should support reverse sorting with any combination of functions and properties:', function() {
     var posts = [
       { path: 'a.md', locals: { date: '2014-01-01', foo: 'zzz', bar: 1 } },
       { path: 'f.md', locals: { date: '2014-01-01', foo: 'mmm', bar: 2 } },
@@ -251,7 +251,7 @@ describe('arraySort', function () {
     ];
 
     var compare = function(prop) {
-      return function (a, b, fn) {
+      return function(a, b, fn) {
         var valA = get(a, prop);
         var valB = get(b, prop);
         return fn(valA, valB);

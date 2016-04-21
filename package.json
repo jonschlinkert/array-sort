@@ -25,11 +25,12 @@
   },
   "devDependencies": {
     "ansi-bold": "^0.1.1",
-    "benchmarked": "^0.1.4",
-    "glob": "^5.0.14",
+    "benchmarked": "^0.1.5",
+    "glob": "^7.0.3",
+    "gulp-format-md": "^0.1.8",
     "lodash.sortbyorder": "^3.4.4",
-    "mocha": "*",
-    "should": "*"
+    "mocha": "^2.4.5",
+    "should": "^8.3.1"
   },
   "keywords": [
     "arr",
@@ -59,14 +60,28 @@
     "sorting"
   ],
   "verb": {
+    "reflinks": [
+      "verb"
+    ],
     "related": {
       "list": [
-        "sort-asc",
-        "sort-desc",
         "get-value",
         "set-value",
+        "sort-asc",
+        "sort-desc",
         "sort-object"
       ]
+    },
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "lint": {
+      "reflinks": true
     }
   }
 }
