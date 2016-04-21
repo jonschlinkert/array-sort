@@ -20,7 +20,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "get-value": "^1.1.5",
+    "get-value": "^2.0.5",
     "kind-of": "^2.0.0"
   },
   "devDependencies": {
