@@ -120,7 +120,7 @@ describe('arraySort', function() {
     var arr = [{key: 'y'}, {key: 'z'}, {key: 'x'}];
 
     var actual = arraySort(arr, function(a, b) {
-      return a.key > b.key;
+      return a.key < b.key ? -1 : (a.key > b.key ? 1 : 0);
     });
 
     actual.should.eql([
