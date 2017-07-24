@@ -4,6 +4,10 @@
   "version": "0.1.2",
   "homepage": "https://github.com/jonschlinkert/array-sort",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "contributors": [
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)",
+    "Kevin Ward (https://github.com/wkevina)"
+  ],
   "repository": "jonschlinkert/array-sort",
   "bugs": {
     "url": "https://github.com/jonschlinkert/array-sort/issues"
