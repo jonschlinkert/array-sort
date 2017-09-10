@@ -91,11 +91,23 @@ function compare(prop, a, b) {
 
 /**
  * Default compare function used as a fallback
- * for sorting.
+ * for sorting. Built-in array sorting pushes
+ * null and undefined values to the end of the array.
  */
 
 function defaultCompare(a, b) {
-  return a < b ? -1 : (a > b ? 1 : 0);
+  var typeA = typeOf(a);
+  var typeB = typeOf(b);
+
+  if (typeA === 'null') {
+    return typeB === 'null' ? 0 : (typeB === 'undefined' ? -1 : 1);
+  } else if (typeA === 'undefined') {
+    return typeB === 'null' ? 1 : (typeB === 'undefined' ? 0 : 1);
+  } else if (typeB === 'null' || typeB === 'undefined') {
+    return -1;
+  } else {
+    return a < b ? -1 : (a > b ? 1 : 0);
+  }
 }
 
 /**
