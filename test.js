@@ -60,6 +60,34 @@ describe('arraySort', function() {
     ]);
   });
 
+  it('should sort by a property with null values:', function() {
+    var arr = [{key: null}, {key: 'z'}, {key: 'x'}];
+    arraySort(arr, 'key').should.eql([
+      {key: 'x'},
+      {key: 'z'},
+      {key: null}
+    ]);
+  });
+
+  it('should sort by a property with undefined values:', function() {
+    var arr = [{}, {key: 'z'}, {key: 'x'}];
+    arraySort(arr, 'key').should.eql([
+      {key: 'x'},
+      {key: 'z'},
+      {}
+    ]);
+  });
+
+  it('should sort by a property with null and undefined values:', function() {
+    var arr = [{key: null}, {key: 'z'}, {}, {key: 'x'}];
+    arraySort(arr, 'key').should.eql([
+      {key: 'x'},
+      {key: 'z'},
+      {key: null},
+      {}
+    ]);
+  });
+
   it('should sort by a nested property:', function() {
     var res = arraySort(posts, 'locals.date');
     res.should.eql([
@@ -113,6 +141,84 @@ describe('arraySort', function() {
       { foo: 'ccc', locals: { date: '2015-01-02' } },
       { foo: 'ddd', locals: { date: '2014-01-09' } },
       { foo: 'ddd', locals: { date: '2015-04-12' } }
+    ]);
+  });
+
+  it('should sort by multiple properties with null values:', function() {
+    var posts = [
+      { foo: 'bbb', locals: { date: '2013-05-06' } },
+      { foo: 'aaa', locals: { date: '2012-01-02' } },
+      { foo: null, locals: { date: '2015-04-12' } },
+      { foo: 'ccc', locals: { date: '2014-01-02' } },
+      { foo: null, locals: { date: '2015-01-02' } },
+      { foo: 'ddd', locals: { date: '2014-01-09' } },
+      { foo: 'bbb', locals: { date: null } },
+      { foo: 'aaa', locals: { date: '2014-02-02' } },
+    ];
+
+    var actual = arraySort(posts, ['foo', 'locals.date']);
+
+    actual.should.eql([
+      { foo: 'aaa', locals: { date: '2012-01-02' } },
+      { foo: 'aaa', locals: { date: '2014-02-02' } },
+      { foo: 'bbb', locals: { date: '2013-05-06' } },
+      { foo: 'bbb', locals: { date: null } },
+      { foo: 'ccc', locals: { date: '2014-01-02' } },
+      { foo: 'ddd', locals: { date: '2014-01-09' } },
+      { foo: null, locals: { date: '2015-01-02' } },
+      { foo: null, locals: { date: '2015-04-12' } }
+    ]);
+  });
+
+  it('should sort by multiple properties with undefined values:', function() {
+    var posts = [
+      { foo: 'bbb', locals: { date: '2013-05-06' } },
+      { foo: 'aaa', locals: { date: '2012-01-02' } },
+      { locals: { date: '2015-04-12' } },
+      { foo: 'ccc', locals: { date: '2014-01-02' } },
+      { locals: { date: '2015-01-02' } },
+      { foo: 'ddd', locals: { date: '2014-01-09' } },
+      { foo: 'bbb', locals: {} },
+      { foo: 'aaa', locals: { date: '2014-02-02' } },
+    ];
+
+    var actual = arraySort(posts, ['foo', 'locals.date']);
+
+    actual.should.eql([
+      { foo: 'aaa', locals: { date: '2012-01-02' } },
+      { foo: 'aaa', locals: { date: '2014-02-02' } },
+      { foo: 'bbb', locals: { date: '2013-05-06' } },
+      { foo: 'bbb', locals: {} },
+      { foo: 'ccc', locals: { date: '2014-01-02' } },
+      { foo: 'ddd', locals: { date: '2014-01-09' } },
+      { locals: { date: '2015-01-02' } },
+      { locals: { date: '2015-04-12' } }
+    ]);
+  });
+
+  it('should sort by multiple properties with null and undefined values:', function() {
+    var posts = [
+      { foo: 'bbb', locals: { date: '2013-05-06' } },
+      { foo: 'aaa', locals: { date: null } },
+      { locals: { date: '2015-04-12' } },
+      { foo: 'ccc', locals: { date: '2014-01-02' } },
+      { locals: { date: '2015-01-02' } },
+      { foo: 'ddd', locals: { date: '2014-01-09' } },
+      { foo: null, locals: {} },
+      { foo: 'aaa', locals: { date: '2014-02-02' } },
+    ];
+
+    var actual = arraySort(posts, ['foo', 'locals.date']);
+
+    actual.should.eql([
+      { foo: 'aaa', locals: { date: '2014-02-02' } },
+      { foo: 'aaa', locals: { date: null } },
+      { foo: 'bbb', locals: { date: '2013-05-06' } },
+      { foo: 'ccc', locals: { date: '2014-01-02' } },
+      { foo: 'ddd', locals: { date: '2014-01-09' } },
+      { foo: null, locals: {} },
+      { locals: { date: '2015-01-02' } },
+      { locals: { date: '2015-04-12' } }
     ]);
   });
 
