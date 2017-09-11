@@ -7,6 +7,7 @@
 
 'use strict';
 
+var defaultCompare = require('default-compare');
 var typeOf = require('kind-of');
 var get = require('get-value');
 
@@ -87,27 +88,6 @@ function compare(prop, a, b) {
     return compare(null, get(a, prop), get(b, prop));
   }
   return defaultCompare(a, b);
-}
-
-/**
- * Default compare function used as a fallback
- * for sorting. Built-in array sorting pushes
- * null and undefined values to the end of the array.
- */
-
-function defaultCompare(a, b) {
-  var typeA = typeOf(a);
-  var typeB = typeOf(b);
-
-  if (typeA === 'null') {
-    return typeB === 'null' ? 0 : (typeB === 'undefined' ? -1 : 1);
-  } else if (typeA === 'undefined') {
-    return typeB === 'null' ? 1 : (typeB === 'undefined' ? 0 : 1);
-  } else if (typeB === 'null' || typeB === 'undefined') {
-    return -1;
-  } else {
-    return a < b ? -1 : (a > b ? 1 : 0);
-  }
 }
 
 /**

@@ -24,6 +24,7 @@
     "test": "mocha"
   },
   "dependencies": {
+    "default-compare": "^1.0.0",
     "get-value": "^2.0.5",
     "kind-of": "^2.0.0"
   },
