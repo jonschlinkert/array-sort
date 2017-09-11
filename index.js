@@ -7,6 +7,7 @@
 
 'use strict';
 
+var defaultCompare = require('default-compare');
 var typeOf = require('kind-of');
 var get = require('get-value');
 
@@ -87,15 +88,6 @@ function compare(prop, a, b) {
     return compare(null, get(a, prop), get(b, prop));
   }
   return defaultCompare(a, b);
-}
-
-/**
- * Default compare function used as a fallback
- * for sorting.
- */
-
-function defaultCompare(a, b) {
-  return a < b ? -1 : (a > b ? 1 : 0);
 }
 
 /**
